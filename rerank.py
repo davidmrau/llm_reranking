@@ -57,12 +57,7 @@ def dump_qrels(dataset_name, hf_dataset, folder='qrels'):
     return qrels_file
 
 def format_instruction(sample):
-    return f"""write a question based on this text.
-text:
-{sample['document']}
-question:
-{sample['query']}"""
-
+    return f"Passage: {sample['document']}. Please write a question based on this passage."
 
 def load_model_and_tokenizer(model_name):
     try:
@@ -88,12 +83,12 @@ def collate_fn(batch):
     qids = [sample['qid'] for sample in batch]
     dids = [sample['did'] for sample in batch]
     #target = [sample['gen_rel_document'] for sample in batch]
-    target = ['\n' + sample['query'] for sample in batch]
+    target = ['Questions: ' + sample['query'] for sample in batch]
     instr = [format_instruction(sample)  for sample in batch]  # Add prompt to each text
     #instr_tokenized = tokenizer(instr, padding=True, truncation=True, return_tensors="pt")
     #target_tokenized = tokenizer(target, padding=True, truncation=True, return_tensors="pt").input_ids[..., 3:]
     instr_tokenized = tokenizer(instr, truncation=True, return_tensors="pt")
-    target_tokenized = tokenizer(target, truncation=True, return_tensors="pt").input_ids[..., 3:]
+    target_tokenized = tokenizer(target, truncation=True, return_tensors="pt", add_special_tokens=False).input_ids
     #remove_token_type_ids(instr_tokenized)
     return qids, dids, instr_tokenized, target_tokenized
 
@@ -101,7 +96,6 @@ def collate_fn(batch):
 
 
 def get_scores(model, instr_tokenized, target_tokenized):
-    #remove_token_type_ids(instr_tokenized)
     logits = model(**instr_tokenized.to('cuda')).logits
     #loss_fct = CrossEntropyLoss(reduction='none', ignore_index=model.config.pad_token_id)
     loss_fct = torch.nn.CrossEntropyLoss(reduction='none')
@@ -113,10 +107,9 @@ def get_scores(model, instr_tokenized, target_tokenized):
 
 
 def get_scores(model, instr_tokenized, target_tokenized):
-    remove_token_type_ids(instr_tokenized)
-    logits = model(input_ids=instr_tokenized.to('cuda').input_ids, attention_mask=instr_tokenized.to('cuda').attention_mask, labels=instr_tokenized.to('cuda').input_ids).logits
+    logits = model(input_ids=instr_tokenized.to('cuda').input_ids, attention_mask=instr_tokenized.to('cuda').attention_mask, labels=target_tokenized.to('cuda').input_ids).logits
     log_softmax = torch.nn.functional.log_softmax(logits, dim=-1)
-    loss = -log_softmax.gather(2, target_tokenized.unsqueeze(2)).squeeze(2) 
+    loss = log_softmax.gather(2, target_tokenized.unsqueeze(2)).squeeze(2) 
     loss = torch.sum(loss, dim=1)
     return loss
 
@@ -133,14 +126,14 @@ trec_run = load_trec_run(bm25_runs + template_run_file.format(dataset_name))
 qrels_hf = load_dataset(f'BeIR/{dataset_name}-qrels')
 qrels_file = dump_qrels(dataset_name, qrels_hf['test'], folder='qrels')
 trec = evaluate.load("trec_eval")
-ranking_file = 'reranking/{dataset_name}_{model_name}.trec'
+ranking_file = f'reranking/{dataset_name}_{model_name.replace("/", "_")}'
 batch_size = 1
 dataset = make_hf_dataset(trec_run, corpus, queries)
 # Create a DataLoader
 dataloader = DataLoader(dataset, batch_size=batch_size, collate_fn=collate_fn, num_workers=4)
 
 model, tokenizer = load_model_and_tokenizer(model_name)
-
+count = 0
 res_test = defaultdict(dict)
 with torch.inference_mode():
     for batch_inp in tqdm(dataloader):
@@ -152,6 +145,9 @@ with torch.inference_mode():
         # for each example in batch
         for i in range(batch_num_examples):
             res_test[qids[i]][dids[i]] = scores[i].item()
+        count += 1
+        if count == 100:
+            break
     sorted_scores = []
     q_ids = []
     # for each query sort after scores
