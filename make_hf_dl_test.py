@@ -1,3 +1,5 @@
+
+
 from datasets import Dataset, DatasetDict
 corpus = '../llm_rankers/data/msmarco/collection.dl20_54.tsv'
 queries = '../llm_rankers/data/msmarco/msmarco-test2020-queries_54.tsv'
@@ -11,11 +13,12 @@ queries = '/projects/0/gusr0546/data_rank_model/msmarco/msmarco-test2019-queries
 qrels = '/projects/0/gusr0546/data_rank_model/msmarco/2019qrels-pass.txt'
 
 def load(fname):
-    d = {"id_" : [], 'text': []}
+    d = {"_id" : [], 'text': [], 'title': []}
     for l in open(fname):
         id_, text = l.strip().split('\t')
-        d['id_'].append(id_)
+        d['_id'].append(id_)
         d['text'].append(text)
+        d['title'].append('')
     return d
 
 def load_qrel(fname):

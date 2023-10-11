@@ -22,15 +22,10 @@ def load_trec_run(fname):
 
 # to dict
 def ds_to_map(dataset, split_name):
-    print(dataset, split_name)
     examples = dataset[split_name]
     mapping = {}
     for example in tqdm(examples):
-        if 'title' in example:
-            content = example['title'] + " " + example['text']
-        else:
-            content = example['text']
-        mapping[example["_id"]] =  content
+        mapping[example["_id"]] =  example["title"] + " " + example["text"]
     return mapping
 
 def make_hf_dataset(trec_run, corpus, queries):
@@ -80,7 +75,6 @@ def load_model_and_tokenizer(model_name):
             print('- ' * 10 + 'Using T5 model' +  '- ' * 10)
             model = T5ForConditionalGeneration.from_pretrained(model_name, device_map='auto', torch_dtype=torch.bfloat16)
     tokenizer = AutoTokenizer.from_pretrained(model_name, padding_side='right',trust_remote_code=True)
-    #model = torch.nn.DataParallel(model)
     return model, tokenizer
 
 
@@ -119,25 +113,21 @@ def get_scores(model, instr_tokenized, target_tokenized):
 
 
 
-def rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, hf_user):
+def rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file):
     #load data
-    template_run_file = "run.beir.qld-multifield.{}.txt" 
-    qrels_hf = load_dataset(f'{hf_user}/{dataset_name}-qrels')
+    template_run_file = "run.beir.bm25-multifield.{}.txt" 
+    qrels_hf = load_dataset(f'BeIR/{dataset_name}-qrels')
     split = 'validation' if 'dataset_name' == 'msmarco' else 'test'
-    qrels_file = dump_qrels(dataset_name, qrels_hf[split], folder='qrels')
-    if 'dmrau' == hf_user:
-        queries = ds_to_map(load_dataset(f'{hf_user}/{dataset_name}'), 'queries')
-        corpus = ds_to_map(load_dataset(f'{hf_user}/{dataset_name}'), 'corpus')
-    else:
-        queries = ds_to_map(load_dataset(f'{hf_user}/{dataset_name}', 'queries'), 'queries')
-        corpus = ds_to_map(load_dataset(f'{hf_user}/{dataset_name}', 'corpus'), 'corpus')
+    qrels_file = dump_qrels(dataset_name, qrels_hf['test'], folder='qrels')
+    queries = ds_to_map(load_dataset(f'BeIR/{dataset_name}', 'queries'), 'queries')
+    corpus = ds_to_map(load_dataset(f'BeIR/{dataset_name}', 'corpus'), 'corpus')
     trec_run = load_trec_run(bm25_runs + '/' + template_run_file.format(dataset_name))
 
-    qrels = trectools_qrel(f'{hf_user}/{dataset_name}-qrels')
+    #qrels = trectools_qrel(f'BeIR/{dataset_name}-qrels')
 
     dataset = make_hf_dataset(trec_run, corpus, queries)
     # Create a DataLoader
-    dataloader = DataLoader(dataset, batch_size=batch_size, collate_fn=collate_fn,  num_workers=4)
+    dataloader = DataLoader(dataset, batch_size=batch_size, collate_fn=collate_fn, num_workers=4)
 
     res_test = defaultdict(dict)
     with torch.inference_mode():
@@ -150,35 +140,40 @@ def rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, 
             # for each example in batch
             for i in range(batch_num_examples):
                 res_test[qids[i]][dids[i]] = scores[i].item()
-    sorted_scores = []
-    q_ids = []
-    # for each query sort after scores
-    for qid, docs in res_test.items():
-        sorted_scores_q = [(doc_id, docs[doc_id]) for doc_id in sorted(docs, key=docs.get
-    , reverse=True)]
-        q_ids.append(qid)
-        sorted_scores.append(sorted_scores_q)
+        sorted_scores = []
+        q_ids = []
+        # for each query sort after scores
+        for qid, docs in res_test.items():
+            sorted_scores_q = [(doc_id, docs[doc_id]) for doc_id in sorted(docs, key=docs.get
+        , reverse=True)]
+            q_ids.append(qid)
+            sorted_scores.append(sorted_scores_q)
 
-    test = Trec('ndcg_cut_10', 'trec_eval', qrels_file, 100, ranking_file_path=ranking_file)
+    test = Trec('ndcg_cut_10', 'trec_eval', qrels_file, 1000, ranking_file_path=ranking_file)
     eval_score = test.score(sorted_scores, q_ids)
     print('ndcg_cut_10', eval_score)
 
 
-#dataset_names = ['scifact', 'scidocs', 'nfcorpus', 'fiqa', 'trec-covid', 'webis-touche2020', 'nq', 'msmarco', 'hotpotqa', 'arguana', 'quora', 'dbpedia-entity', 'fever', 'climate-fever', 'trec_dl20', 'trec_dl19']
+#dataset_names = ['scifact', 'scidocs', 'nfcorpus', 'fiqa', 'trec-covid', 'webis-touche2020', 'nq', 'msmarco', 'hotpotqa', 'arguana', 'quora', 'dbpedia-entity', 'fever', 'climate-fever']
 
 
 dataset_name = sys.argv[1]
+dataset_names = [dataset_name]
 
 model_name = 'bigscience/T0_3B'
 model, tokenizer = load_model_and_tokenizer(model_name)
-batch_size = 192
-#bm25_runs = "beir_bm25_runs_top100"
-bm25_runs = "beir_qld_runs_top100"
+num_gpus = torch.cuda.device_count()    
+if num_gpus > 1:
+    print(f"Found {num_gpus} GPUs.")
+    model = torch.nn.DataParallel(model)
 
+batch_size = 768
+bm25_runs = "beir_bm25_runs_top1000"
 
-print(dataset_name)
-ranking_file = f'reranking_qld/{bm25_runs}_{dataset_name}_{model_name.replace("/", "_")}'
-if not os.path.exists(ranking_file):
-    print(ranking_file)
-    hf_user = 'dmrau' if 'trec_dl' in dataset_name or 'cqadupstack' in dataset_name  else 'BeIR'
-    rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, hf_user)
+for dataset_name in dataset_names:
+    if 'dataset_name' == 'msmarco' or 'dataset_name' == 'trec-covid':
+        break
+    print(dataset_name)
+    ranking_file = f'reranking/{bm25_runs}_{dataset_name}_{model_name.replace("/", "_")}'
+    if not os.path.exists(ranking_file):
+        rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file)
