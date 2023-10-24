@@ -1,0 +1,164 @@
+
+Tue Oct 17 18:55:45 2023       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.104.12             Driver Version: 535.104.12   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  | 00000000:32:00.0 Off |                  Off |
+| N/A   29C    P0              52W / 400W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+|   1  NVIDIA A100-SXM4-40GB          On  | 00000000:E3:00.0 Off |                  Off |
+| N/A   29C    P0              49W / 400W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+Loading checkpoint shards:   0%|          | 0/15 [00:00<?, ?it/s]Loading checkpoint shards:   7%|▋         | 1/15 [00:14<03:29, 14.99s/it]Loading checkpoint shards:  13%|█▎        | 2/15 [00:22<02:18, 10.69s/it]Loading checkpoint shards:  20%|██        | 3/15 [00:27<01:37,  8.10s/it]Loading checkpoint shards:  27%|██▋       | 4/15 [00:32<01:16,  6.99s/it]Loading checkpoint shards:  33%|███▎      | 5/15 [00:37<01:02,  6.28s/it]Loading checkpoint shards:  40%|████      | 6/15 [00:42<00:52,  5.84s/it]Loading checkpoint shards:  47%|████▋     | 7/15 [00:48<00:45,  5.67s/it]Loading checkpoint shards:  53%|█████▎    | 8/15 [00:53<00:39,  5.59s/it]Loading checkpoint shards:  60%|██████    | 9/15 [00:58<00:32,  5.43s/it]Loading checkpoint shards:  67%|██████▋   | 10/15 [01:03<00:26,  5.32s/it]Loading checkpoint shards:  73%|███████▎  | 11/15 [01:09<00:21,  5.31s/it]Loading checkpoint shards:  80%|████████  | 12/15 [01:14<00:15,  5.32s/it]Loading checkpoint shards:  87%|████████▋ | 13/15 [01:19<00:10,  5.19s/it]Loading checkpoint shards:  93%|█████████▎| 14/15 [01:28<00:06,  6.43s/it]Loading checkpoint shards: 100%|██████████| 15/15 [01:29<00:00,  4.81s/it]Loading checkpoint shards: 100%|██████████| 15/15 [01:29<00:00,  5.98s/it]
+Loading the tokenizer from the `special_tokens_map.json` and the `added_tokens.json` will be removed in `transformers 5`,  it is kept for forward compatibility, but it is recommended to update your `tokenizer_config.json` by uploading it again. You will see the new `added_tokens_decoder` attribute that will store the relevant information.
+You are resizing the embedding layer without providing a `pad_to_multiple_of` parameter. This means that the new embedding dimension will be 32001. This might induce some performance reduction as *Tensor Cores* will not be available. For more details about this, or help on choosing the correct value for resizing, refer to this guide: https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/index.html#requirements-tc
+trec_dl19
+reranking_llama/beir_bm25_runs_top100_trec_dl19_meta-llama_Llama-2-70b-hf
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 43
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 5482
+    })
+}) queries
+  0%|          | 0/43 [00:00<?, ?it/s]100%|██████████| 43/43 [00:00<00:00, 30787.82it/s]
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 43
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 5482
+    })
+}) corpus
+  0%|          | 0/5482 [00:00<?, ?it/s] 66%|██████▌   | 3605/5482 [00:00<00:00, 36043.07it/s]100%|██████████| 5482/5482 [00:00<00:00, 35995.06it/s]
+  0%|          | 0/135 [00:00<?, ?it/s]  0%|          | 0/135 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank.py", line 217, in <module>
+    rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, hf_user)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank.py", line 182, in rerank
+    scores = get_scores(model, instr_tokenized, target_tokenized)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank.py", line 148, in get_scores
+    logits = model(**instr_tokenized.to('cuda')).logits
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 1035, in forward
+    outputs = self.model(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 922, in forward
+    layer_outputs = decoder_layer(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 632, in forward
+    hidden_states, self_attn_weights, present_key_value = self.self_attn(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 490, in forward
+    attn_output = self._flash_attention_forward(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 527, in _flash_attention_forward
+    query_states, key_states, value_states, indices_q, cu_seq_lens, max_seq_lens = self._upad_input(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 563, in _upad_input
+    query_layer.reshape(batch_size * kv_seq_len, num_heads, head_dim), indices_k
+RuntimeError: shape '[5856, 8, 128]' is invalid for input of size 47972352
+Loading checkpoint shards:   0%|          | 0/15 [00:00<?, ?it/s]Loading checkpoint shards:   7%|▋         | 1/15 [00:12<02:48, 12.01s/it]Loading checkpoint shards:  13%|█▎        | 2/15 [00:17<01:43,  8.00s/it]Loading checkpoint shards:  20%|██        | 3/15 [00:22<01:20,  6.72s/it]Loading checkpoint shards:  27%|██▋       | 4/15 [00:28<01:09,  6.35s/it]Loading checkpoint shards:  33%|███▎      | 5/15 [00:33<00:59,  5.99s/it]Loading checkpoint shards:  40%|████      | 6/15 [00:38<00:50,  5.66s/it]Loading checkpoint shards:  47%|████▋     | 7/15 [00:43<00:43,  5.50s/it]Loading checkpoint shards:  53%|█████▎    | 8/15 [00:49<00:38,  5.53s/it]Loading checkpoint shards:  60%|██████    | 9/15 [00:54<00:32,  5.37s/it]Loading checkpoint shards:  67%|██████▋   | 10/15 [00:59<00:26,  5.36s/it]Loading checkpoint shards:  73%|███████▎  | 11/15 [01:05<00:21,  5.36s/it]Loading checkpoint shards:  80%|████████  | 12/15 [01:10<00:16,  5.36s/it]Loading checkpoint shards:  87%|████████▋ | 13/15 [01:16<00:10,  5.49s/it]Loading checkpoint shards:  93%|█████████▎| 14/15 [01:21<00:05,  5.52s/it]Loading checkpoint shards: 100%|██████████| 15/15 [01:22<00:00,  3.96s/it]Loading checkpoint shards: 100%|██████████| 15/15 [01:22<00:00,  5.47s/it]
+Loading the tokenizer from the `special_tokens_map.json` and the `added_tokens.json` will be removed in `transformers 5`,  it is kept for forward compatibility, but it is recommended to update your `tokenizer_config.json` by uploading it again. You will see the new `added_tokens_decoder` attribute that will store the relevant information.
+You are resizing the embedding layer without providing a `pad_to_multiple_of` parameter. This means that the new embedding dimension will be 32001. This might induce some performance reduction as *Tensor Cores* will not be available. For more details about this, or help on choosing the correct value for resizing, refer to this guide: https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/index.html#requirements-tc
+trec_dl19
+reranking_llama/beir_bm25_runs_top100_trec_dl19_meta-llama_Llama-2-70b-chat-hf
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 43
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 5482
+    })
+}) queries
+  0%|          | 0/43 [00:00<?, ?it/s]100%|██████████| 43/43 [00:00<00:00, 31058.22it/s]
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 43
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 5482
+    })
+}) corpus
+  0%|          | 0/5482 [00:00<?, ?it/s] 65%|██████▍   | 3551/5482 [00:00<00:00, 35508.09it/s]100%|██████████| 5482/5482 [00:00<00:00, 35471.80it/s]
+  0%|          | 0/135 [00:00<?, ?it/s]  0%|          | 0/135 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank.py", line 217, in <module>
+    rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, hf_user)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank.py", line 182, in rerank
+    scores = get_scores(model, instr_tokenized, target_tokenized)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank.py", line 148, in get_scores
+    logits = model(**instr_tokenized.to('cuda')).logits
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 1035, in forward
+    outputs = self.model(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 922, in forward
+    layer_outputs = decoder_layer(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 632, in forward
+    hidden_states, self_attn_weights, present_key_value = self.self_attn(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 490, in forward
+    attn_output = self._flash_attention_forward(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 527, in _flash_attention_forward
+    query_states, key_states, value_states, indices_q, cu_seq_lens, max_seq_lens = self._upad_input(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 563, in _upad_input
+    query_layer.reshape(batch_size * kv_seq_len, num_heads, head_dim), indices_k
+RuntimeError: shape '[5856, 8, 128]' is invalid for input of size 47972352
+
+JOB STATISTICS
+==============
+Job ID: 4202541
+Cluster: snellius
+User/Group: drau/drau
+State: RUNNING
+Nodes: 1
+Cores per node: 36
+CPU Utilized: 00:00:00
+CPU Efficiency: 0.00% of 02:10:48 core-walltime
+Job Wall-clock time: 00:03:38
+Memory Utilized: 0.00 MB (estimated maximum)
+Memory Efficiency: 0.00% of 240.00 GB (240.00 GB/node)
+WARNING: Efficiency statistics may be misleading for RUNNING jobs.

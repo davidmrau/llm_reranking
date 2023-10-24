@@ -1,0 +1,45 @@
+
+Tue Oct 17 19:14:24 2023       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.104.12             Driver Version: 535.104.12   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  | 00000000:32:00.0 Off |                  Off |
+| N/A   29C    P0              49W / 400W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+|   1  NVIDIA A100-SXM4-40GB          On  | 00000000:E3:00.0 Off |                  Off |
+| N/A   30C    P0              49W / 400W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/cuda/__init__.py:107: UserWarning: CUDA initialization: CUDA driver initialization failed, you might not have a CUDA gpu. (Triggered internally at ../c10/cuda/CUDAFunctions.cpp:109.)
+  return torch._C._cuda_getDeviceCount() > 0
+- - - - - - - - - -  Quantization and Flash Attention  2.0 not used! - - - - - - - - - - 
+Loading checkpoint shards:   0%|          | 0/15 [00:00<?, ?it/s]Loading checkpoint shards:   7%|▋         | 1/15 [00:06<01:36,  6.88s/it]Loading checkpoint shards:  13%|█▎        | 2/15 [00:13<01:29,  6.87s/it]Loading checkpoint shards:  20%|██        | 3/15 [00:20<01:19,  6.64s/it]Loading checkpoint shards:  27%|██▋       | 4/15 [00:26<01:14,  6.74s/it]slurmstepd: error: *** JOB 4202563 ON gcn35 CANCELLED AT 2023-10-17T19:15:25 ***
+slurmstepd: error: container_p_join: setns failed for /slurm/4202563/.ns: Invalid argument
+slurmstepd: error: container_g_join(4202563): Invalid argument
+
+JOB STATISTICS
+==============
+Job ID: 4202563
+Cluster: snellius
+User/Group: drau/drau
+State: CANCELLED (exit code 0)
+Nodes: 1
+Cores per node: 36
+CPU Utilized: 00:00:01
+CPU Efficiency: 0.04% of 00:41:24 core-walltime
+Job Wall-clock time: 00:01:09
+Memory Utilized: 94.70 GB
+Memory Efficiency: 39.46% of 240.00 GB

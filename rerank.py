@@ -59,12 +59,33 @@ def dump_qrels(dataset_name, hf_dataset, folder='qrels'):
     return qrels_file
 
 
+
+
+
+
+
+
+
 def format_instruction(sample):
-    return f"""write a question based on this text.
-text:
+    return f"Passage: {sample['document']}. Please write a question based on this passage. Question: {sample['query']}"
+
+def format_instruction(sample):
+    return f"""Write a question based on the text.
+Text:
 {sample['document']}
-question:
+Question:
 {sample['query']}"""
+
+
+def format_instruction(sample):
+    return f"""### Instruction:
+Write a question based on the text.
+### Text:
+{sample['document']}
+### Question:
+{sample['query']}"""
+def format_instruction(sample):
+    return f"""[INST] You are given a text passage. Please write a question based on this passage. Passage: {sample['document']}. Question: [/INST] ['query']"""
 
 def format_instruction(sample):
     return f"Passage: {sample['document']}. Please write a question based on this passage. Question: {sample['query']}"
@@ -77,7 +98,8 @@ def load_model_and_tokenizer(model_name):
         bnb_4bit_compute_dtype='float16',
         bnb_4bit_use_dobule_quant=False
         )
-        model = AutoModelForCausalLM.from_pretrained(model_name, device_map='auto', quantization_config=quant_config, use_flash_attention_2=True, )
+        #model = AutoModelForCausalLM.from_pretrained(model_name, device_map='auto', quantization_config=quant_config, use_flash_attention_2=True, )
+        model = AutoModelForCausalLM.from_pretrained(model_name, device_map='auto', quantization_config=quant_config )
     except:
         try:
             print('- ' * 10 + ' Quantization and Flash Attention  2.0 not used! ' + '- ' * 10)
@@ -184,17 +206,15 @@ dataset_name = sys.argv[1]
 model_name = 'meta-llama/Llama-2-13b-chat-hf'
 model_name = sys.argv[2]
 model, tokenizer = load_model_and_tokenizer(model_name)
-batch_size = 76
-batch_size = 1
+batch_size = 32
 #bm25_runs = "beir_bm25_runs_top100"
 bm25_runs = "beir_bm25_runs_top100"
 
 
 print(dataset_name)
 ranking_file = f'reranking_llama/{bm25_runs}_{dataset_name}_{model_name.replace("/", "_")}'
-if not os.path.exists(ranking_file):
-    print(ranking_file)
-    hf_user = 'dmrau' if 'trec_dl' in dataset_name or 'cqadupstack' in dataset_name  else 'BeIR'
-    rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, hf_user)
+print(ranking_file)
+hf_user = 'dmrau' if 'trec_dl' in dataset_name or 'cqadupstack' in dataset_name  else 'BeIR'
+rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, hf_user)
 
 

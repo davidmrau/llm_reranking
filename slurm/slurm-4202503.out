@@ -1,0 +1,191 @@
+
+Tue Oct 17 18:44:09 2023       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.104.12             Driver Version: 535.104.12   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  | 00000000:32:00.0 Off |                  Off |
+| N/A   29C    P0              47W / 400W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+|   1  NVIDIA A100-SXM4-40GB          On  | 00000000:E3:00.0 Off |                  Off |
+| N/A   29C    P0              50W / 400W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+Loading checkpoint shards:   0%|          | 0/15 [00:00<?, ?it/s]Loading checkpoint shards:   7%|▋         | 1/15 [00:13<03:10, 13.59s/it]Loading checkpoint shards:  13%|█▎        | 2/15 [00:27<02:58, 13.75s/it]Loading checkpoint shards:  20%|██        | 3/15 [00:40<02:42, 13.50s/it]Loading checkpoint shards:  27%|██▋       | 4/15 [00:54<02:29, 13.62s/it]Loading checkpoint shards:  33%|███▎      | 5/15 [01:07<02:14, 13.46s/it]Loading checkpoint shards:  40%|████      | 6/15 [01:20<02:00, 13.38s/it]Loading checkpoint shards:  47%|████▋     | 7/15 [01:34<01:48, 13.51s/it]Loading checkpoint shards:  53%|█████▎    | 8/15 [01:48<01:36, 13.73s/it]Loading checkpoint shards:  60%|██████    | 9/15 [02:02<01:22, 13.67s/it]Loading checkpoint shards:  67%|██████▋   | 10/15 [02:15<01:07, 13.59s/it]Loading checkpoint shards:  73%|███████▎  | 11/15 [02:29<00:54, 13.60s/it]Loading checkpoint shards:  80%|████████  | 12/15 [02:44<00:41, 13.90s/it]Loading checkpoint shards:  87%|████████▋ | 13/15 [02:57<00:27, 13.77s/it]Loading checkpoint shards:  93%|█████████▎| 14/15 [03:10<00:13, 13.59s/it]Loading checkpoint shards: 100%|██████████| 15/15 [03:11<00:00,  9.76s/it]Loading checkpoint shards: 100%|██████████| 15/15 [03:11<00:00, 12.77s/it]
+Loading the tokenizer from the `special_tokens_map.json` and the `added_tokens.json` will be removed in `transformers 5`,  it is kept for forward compatibility, but it is recommended to update your `tokenizer_config.json` by uploading it again. You will see the new `added_tokens_decoder` attribute that will store the relevant information.
+You are resizing the embedding layer without providing a `pad_to_multiple_of` parameter. This means that the new embedding dimension will be 32001. This might induce some performance reduction as *Tensor Cores* will not be available. For more details about this, or help on choosing the correct value for resizing, refer to this guide: https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/index.html#requirements-tc
+trec_dl19
+class_reranking_llama_bz_1/beir_bm25_runs_top100_trec_dl19_meta-llama_Llama-2-70b-chat-hf
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 43
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 5482
+    })
+}) queries
+  0%|          | 0/43 [00:00<?, ?it/s]100%|██████████| 43/43 [00:00<00:00, 30772.06it/s]
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 43
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 5482
+    })
+}) corpus
+  0%|          | 0/5482 [00:00<?, ?it/s] 62%|██████▏   | 3404/5482 [00:00<00:00, 34037.35it/s]100%|██████████| 5482/5482 [00:00<00:00, 34056.14it/s]
+  0%|          | 0/135 [00:00<?, ?it/s]Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/generation/configuration_utils.py:362: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.6` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/generation/configuration_utils.py:367: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.9` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+  0%|          | 0/135 [00:01<?, ?it/s]
+Traceback (most recent call last):
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_class.py", line 194, in <module>
+    rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, hf_user)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_class.py", line 159, in rerank
+    scores = get_scores(model, instr_tokenized, target_tokenized)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_class.py", line 126, in get_scores
+    scores = model.generate(**instr_tokenized.to('cuda'), max_new_tokens=1, do_sample=False, output_scores=True, return_dict_in_generate=True).scores
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/generation/utils.py", line 1606, in generate
+    return self.greedy_search(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/generation/utils.py", line 2454, in greedy_search
+    outputs = self(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 1035, in forward
+    outputs = self.model(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 922, in forward
+    layer_outputs = decoder_layer(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 632, in forward
+    hidden_states, self_attn_weights, present_key_value = self.self_attn(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 490, in forward
+    attn_output = self._flash_attention_forward(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 527, in _flash_attention_forward
+    query_states, key_states, value_states, indices_q, cu_seq_lens, max_seq_lens = self._upad_input(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 563, in _upad_input
+    query_layer.reshape(batch_size * kv_seq_len, num_heads, head_dim), indices_k
+RuntimeError: shape '[6240, 8, 128]' is invalid for input of size 51118080
+Loading checkpoint shards:   0%|          | 0/15 [00:00<?, ?it/s]Loading checkpoint shards:   7%|▋         | 1/15 [00:04<01:09,  4.95s/it]Loading checkpoint shards:  13%|█▎        | 2/15 [00:09<01:02,  4.78s/it]Loading checkpoint shards:  20%|██        | 3/15 [00:14<00:57,  4.80s/it]Loading checkpoint shards:  27%|██▋       | 4/15 [00:19<00:53,  4.89s/it]Loading checkpoint shards:  33%|███▎      | 5/15 [00:24<00:47,  4.80s/it]Loading checkpoint shards:  40%|████      | 6/15 [00:28<00:43,  4.82s/it]Loading checkpoint shards:  47%|████▋     | 7/15 [00:34<00:39,  4.97s/it]Loading checkpoint shards:  53%|█████▎    | 8/15 [00:39<00:35,  5.09s/it]Loading checkpoint shards:  60%|██████    | 9/15 [00:44<00:30,  5.11s/it]Loading checkpoint shards:  67%|██████▋   | 10/15 [00:49<00:25,  5.12s/it]Loading checkpoint shards:  73%|███████▎  | 11/15 [00:55<00:20,  5.17s/it]Loading checkpoint shards:  80%|████████  | 12/15 [01:00<00:15,  5.22s/it]Loading checkpoint shards:  87%|████████▋ | 13/15 [01:05<00:10,  5.22s/it]Loading checkpoint shards:  93%|█████████▎| 14/15 [01:10<00:05,  5.15s/it]Loading checkpoint shards: 100%|██████████| 15/15 [01:11<00:00,  3.70s/it]Loading checkpoint shards: 100%|██████████| 15/15 [01:11<00:00,  4.74s/it]
+Loading the tokenizer from the `special_tokens_map.json` and the `added_tokens.json` will be removed in `transformers 5`,  it is kept for forward compatibility, but it is recommended to update your `tokenizer_config.json` by uploading it again. You will see the new `added_tokens_decoder` attribute that will store the relevant information.
+You are resizing the embedding layer without providing a `pad_to_multiple_of` parameter. This means that the new embedding dimension will be 32001. This might induce some performance reduction as *Tensor Cores* will not be available. For more details about this, or help on choosing the correct value for resizing, refer to this guide: https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/index.html#requirements-tc
+trec_dl19
+class_reranking_llama_bz_1/beir_bm25_runs_top100_trec_dl19_meta-llama_Llama-2-70b-chat-hf
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 43
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 5482
+    })
+}) queries
+  0%|          | 0/43 [00:00<?, ?it/s]100%|██████████| 43/43 [00:00<00:00, 30930.38it/s]
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 43
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 5482
+    })
+}) corpus
+  0%|          | 0/5482 [00:00<?, ?it/s] 65%|██████▍   | 3562/5482 [00:00<00:00, 35610.02it/s]100%|██████████| 5482/5482 [00:00<00:00, 35561.00it/s]
+  0%|          | 0/135 [00:00<?, ?it/s]Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+Asking to truncate to max_length but no maximum length is provided and the model has no predefined maximum length. Default to no truncation.
+/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/generation/configuration_utils.py:362: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.6` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/generation/configuration_utils.py:367: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.9` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+  0%|          | 0/135 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_class.py", line 194, in <module>
+    rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, hf_user)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_class.py", line 159, in rerank
+    scores = get_scores(model, instr_tokenized, target_tokenized)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_class.py", line 126, in get_scores
+    scores = model.generate(**instr_tokenized.to('cuda'), max_new_tokens=1, do_sample=False, output_scores=True, return_dict_in_generate=True).scores
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/generation/utils.py", line 1606, in generate
+    return self.greedy_search(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/generation/utils.py", line 2454, in greedy_search
+    outputs = self(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 1035, in forward
+    outputs = self.model(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 922, in forward
+    layer_outputs = decoder_layer(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 632, in forward
+    hidden_states, self_attn_weights, present_key_value = self.self_attn(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 490, in forward
+    attn_output = self._flash_attention_forward(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 527, in _flash_attention_forward
+    query_states, key_states, value_states, indices_q, cu_seq_lens, max_seq_lens = self._upad_input(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 563, in _upad_input
+    query_layer.reshape(batch_size * kv_seq_len, num_heads, head_dim), indices_k
+RuntimeError: shape '[6240, 8, 128]' is invalid for input of size 51118080
+
+JOB STATISTICS
+==============
+Job ID: 4202503
+Cluster: snellius
+User/Group: drau/drau
+State: FAILED (exit code 1)
+Nodes: 1
+Cores per node: 36
+CPU Utilized: 00:05:41
+CPU Efficiency: 3.00% of 03:09:36 core-walltime
+Job Wall-clock time: 00:05:16
+Memory Utilized: 10.31 GB
+Memory Efficiency: 4.30% of 240.00 GB

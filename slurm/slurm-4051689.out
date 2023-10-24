@@ -1,0 +1,56 @@
+
+Sun Oct  8 18:20:44 2023       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.104.12             Driver Version: 535.104.12   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  | 00000000:CA:00.0 Off |                  Off |
+| N/A   30C    P0              52W / 400W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+Loading the tokenizer from the `special_tokens_map.json` and the `added_tokens.json` will be removed in `transformers 5`,  it is kept for forward compatibility, but it is recommended to update your `tokenizer_config.json` by uploading it again. You will see the new `added_tokens_decoder` attribute that will store the relevant information.
+You are using the default legacy behaviour of the <class 'transformers.models.t5.tokenization_t5.T5Tokenizer'>. If you see this, DO NOT PANIC! This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thouroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+- - - - - - - - - -  Quantization and Flash Attention  2.0 not used! - - - - - - - - - - 
+- - - - - - - - - - Using T5 model- - - - - - - - - - 
+trec_dl20
+Downloading readme:   0%|          | 0.00/430 [00:00<?, ?B/s]Downloading readme: 100%|██████████| 430/430 [00:00<00:00, 3.78MB/s]
+Traceback (most recent call last):
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_t5.py", line 174, in <module>
+    rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, hf_user)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_t5.py", line 123, in rerank
+    queries = ds_to_map(load_dataset(f'{hf_user}/{dataset_name}', 'queries'), 'queries')
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/datasets/load.py", line 2129, in load_dataset
+    builder_instance = load_dataset_builder(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/datasets/load.py", line 1852, in load_dataset_builder
+    builder_instance: DatasetBuilder = builder_cls(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/datasets/builder.py", line 373, in __init__
+    self.config, self.config_id = self._create_builder_config(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/datasets/builder.py", line 539, in _create_builder_config
+    raise ValueError(
+ValueError: BuilderConfig 'queries' not found. Available: ['default']
+
+JOB STATISTICS
+==============
+Job ID: 4051689
+Cluster: snellius
+User/Group: drau/drau
+State: RUNNING
+Nodes: 1
+Cores per node: 18
+CPU Utilized: 00:00:00
+CPU Efficiency: 0.00% of 00:14:42 core-walltime
+Job Wall-clock time: 00:00:49
+Memory Utilized: 0.00 MB (estimated maximum)
+Memory Efficiency: 0.00% of 120.00 GB (120.00 GB/node)
+WARNING: Efficiency statistics may be misleading for RUNNING jobs.

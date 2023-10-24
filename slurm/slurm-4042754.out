@@ -1,0 +1,52 @@
+
+Sat Oct  7 12:57:59 2023       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.104.12             Driver Version: 535.104.12   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  | 00000000:E3:00.0 Off |                  Off |
+| N/A   29C    P0              52W / 400W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+Loading the tokenizer from the `special_tokens_map.json` and the `added_tokens.json` will be removed in `transformers 5`,  it is kept for forward compatibility, but it is recommended to update your `tokenizer_config.json` by uploading it again. You will see the new `added_tokens_decoder` attribute that will store the relevant information.
+You are using the default legacy behaviour of the <class 'transformers.models.t5.tokenization_t5.T5Tokenizer'>. If you see this, DO NOT PANIC! This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thouroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+- - - - - - - - - -  Quantization and Flash Attention  2.0 not used! - - - - - - - - - - 
+- - - - - - - - - - Using T5 model- - - - - - - - - - 
+fiqa.sh
+Traceback (most recent call last):
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_t5.py", line 174, in <module>
+    rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, hf_user)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_t5.py", line 120, in rerank
+    qrels_hf = load_dataset(f'{hf_user}/{dataset_name}-qrels')
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/datasets/load.py", line 2129, in load_dataset
+    builder_instance = load_dataset_builder(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/datasets/load.py", line 1815, in load_dataset_builder
+    dataset_module = dataset_module_factory(
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/datasets/load.py", line 1508, in dataset_module_factory
+    raise FileNotFoundError(
+FileNotFoundError: Couldn't find a dataset script at /gpfs/home3/drau/reproducibility_query_generation/BeIR/fiqa.sh-qrels/fiqa.sh-qrels.py or any data file in the same directory. Couldn't find 'BeIR/fiqa.sh-qrels' on the Hugging Face Hub either: FileNotFoundError: Dataset 'BeIR/fiqa.sh-qrels' doesn't exist on the Hub
+
+JOB STATISTICS
+==============
+Job ID: 4042754
+Cluster: snellius
+User/Group: drau/drau
+State: FAILED (exit code 1)
+Nodes: 1
+Cores per node: 18
+CPU Utilized: 00:00:36
+CPU Efficiency: 4.76% of 00:12:36 core-walltime
+Job Wall-clock time: 00:00:42
+Memory Utilized: 7.13 GB
+Memory Efficiency: 5.94% of 120.00 GB

@@ -1,0 +1,17 @@
+slurmstepd: error: *** JOB 4084603 ON gcn56 CANCELLED AT 2023-10-10T17:51:31 ***
+slurmstepd: error: container_p_join: setns failed for /slurm/4084603/.ns: Invalid argument
+slurmstepd: error: container_g_join(4084603): Invalid argument
+
+JOB STATISTICS
+==============
+Job ID: 4084603
+Cluster: snellius
+User/Group: drau/drau
+State: CANCELLED (exit code 0)
+Nodes: 1
+Cores per node: 18
+CPU Utilized: 00:00:00
+CPU Efficiency: 0.00% of 00:02:24 core-walltime
+Job Wall-clock time: 00:00:08
+Memory Utilized: 1.19 MB
+Memory Efficiency: 0.00% of 120.00 GB

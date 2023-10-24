@@ -88,7 +88,7 @@ def collate_fn(batch):
     qids = [sample['qid'] for sample in batch]
     dids = [sample['did'] for sample in batch]
     #target = [sample['gen_rel_document'] for sample in batch]
-    target = ['Questions: ' + sample['query'] for sample in batch]
+    target = ['Question: ' + sample['query'] for sample in batch]
     instr = [format_instruction(sample)  for sample in batch]  # Add prompt to each text
     instr_tokenized = tokenizer(instr, padding=True, truncation=True, return_tensors="pt", max_length=512)
     target_tokenized = tokenizer(target, padding=True, max_length=128, truncation=True, return_tensors="pt", add_special_tokens=False).input_ids

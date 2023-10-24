@@ -1,0 +1,42 @@
+
+Tue Oct 17 10:02:17 2023       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.104.12             Driver Version: 535.104.12   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  | 00000000:32:00.0 Off |                  Off |
+| N/A   30C    P0              51W / 400W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+|   1  NVIDIA A100-SXM4-40GB          On  | 00000000:E3:00.0 Off |                  Off |
+| N/A   29C    P0              45W / 400W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+Loading checkpoint shards:   0%|          | 0/15 [00:00<?, ?it/s]Loading checkpoint shards:   7%|▋         | 1/15 [00:13<03:10, 13.63s/it]slurmstepd: error: *** JOB 4196020 ON gcn28 CANCELLED AT 2023-10-17T10:02:57 ***
+slurmstepd: error: container_p_join: open failed for /slurm/4196020/.ns: No such file or directory
+slurmstepd: error: container_g_join(4196020): No such file or directory
+
+JOB STATISTICS
+==============
+Job ID: 4196020
+Cluster: snellius
+User/Group: drau/drau
+State: CANCELLED (exit code 0)
+Nodes: 1
+Cores per node: 36
+CPU Utilized: 00:00:03
+CPU Efficiency: 0.14% of 00:34:48 core-walltime
+Job Wall-clock time: 00:00:58
+Memory Utilized: 9.80 GB
+Memory Efficiency: 4.08% of 240.00 GB

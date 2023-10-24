@@ -1,0 +1,143 @@
+
+Tue Oct 10 12:50:16 2023       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.104.12             Driver Version: 535.104.12   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  | 00000000:E3:00.0 Off |                  Off |
+| N/A   29C    P0              52W / 400W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+Loading the tokenizer from the `special_tokens_map.json` and the `added_tokens.json` will be removed in `transformers 5`,  it is kept for forward compatibility, but it is recommended to update your `tokenizer_config.json` by uploading it again. You will see the new `added_tokens_decoder` attribute that will store the relevant information.
+You are using the default legacy behaviour of the <class 'transformers.models.t5.tokenization_t5.T5Tokenizer'>. If you see this, DO NOT PANIC! This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thouroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+- - - - - - - - - -  Quantization and Flash Attention  2.0 not used! - - - - - - - - - - 
+- - - - - - - - - - Using T5 model- - - - - - - - - - 
+cqadupstack-unix
+reranking_qld/beir_qld_runs_top100_cqadupstack-unix_bigscience_T0_3B
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 1072
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 47382
+    })
+}) queries
+  0%|          | 0/1072 [00:00<?, ?it/s]100%|██████████| 1072/1072 [00:00<00:00, 36185.44it/s]
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 1072
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 47382
+    })
+}) corpus
+  0%|          | 0/47382 [00:00<?, ?it/s]  7%|▋         | 3273/47382 [00:00<00:01, 32723.09it/s] 14%|█▍        | 6586/47382 [00:00<00:01, 32957.78it/s] 21%|██        | 9891/47382 [00:00<00:01, 32994.58it/s] 28%|██▊       | 13191/47382 [00:00<00:01, 32870.71it/s] 35%|███▍      | 16479/47382 [00:00<00:00, 32774.99it/s] 42%|████▏     | 19788/47382 [00:00<00:00, 32879.93it/s] 49%|████▊     | 23097/47382 [00:00<00:00, 32945.63it/s] 56%|█████▌    | 26413/47382 [00:00<00:00, 33010.88it/s] 63%|██████▎   | 29715/47382 [00:00<00:00, 32939.15it/s] 70%|██████▉   | 33009/47382 [00:01<00:00, 32776.42it/s] 77%|███████▋  | 36309/47382 [00:01<00:00, 32842.27it/s] 84%|████████▎ | 39610/47382 [00:01<00:00, 32892.31it/s] 91%|█████████ | 42900/47382 [00:01<00:00, 32889.22it/s] 97%|█████████▋| 46190/47382 [00:01<00:00, 32790.66it/s]100%|██████████| 47382/47382 [00:01<00:00, 32860.50it/s]
+Traceback (most recent call last):
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_t5.py", line 183, in <module>
+    rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, hf_user)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_t5.py", line 133, in rerank
+    trec_run = load_trec_run(bm25_runs + '/' + template_run_file.format(dataset_name))
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_t5.py", line 15, in load_trec_run
+    for line in open(fname):
+FileNotFoundError: [Errno 2] No such file or directory: 'beir_qld_runs_top100/run.beir.qld-multifield.cqadupstack-unix.txt'
+Loading the tokenizer from the `special_tokens_map.json` and the `added_tokens.json` will be removed in `transformers 5`,  it is kept for forward compatibility, but it is recommended to update your `tokenizer_config.json` by uploading it again. You will see the new `added_tokens_decoder` attribute that will store the relevant information.
+You are using the default legacy behaviour of the <class 'transformers.models.t5.tokenization_t5.T5Tokenizer'>. If you see this, DO NOT PANIC! This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thouroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+- - - - - - - - - -  Quantization and Flash Attention  2.0 not used! - - - - - - - - - - 
+- - - - - - - - - - Using T5 model- - - - - - - - - - 
+cqadupstack-webmasters
+reranking_qld/beir_qld_runs_top100_cqadupstack-webmasters_bigscience_T0_3B
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 506
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 17405
+    })
+}) queries
+  0%|          | 0/506 [00:00<?, ?it/s]100%|██████████| 506/506 [00:00<00:00, 35623.11it/s]
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 506
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 17405
+    })
+}) corpus
+  0%|          | 0/17405 [00:00<?, ?it/s] 20%|█▉        | 3416/17405 [00:00<00:00, 34149.69it/s] 39%|███▉      | 6856/17405 [00:00<00:00, 34293.81it/s] 59%|█████▉    | 10301/17405 [00:00<00:00, 34362.59it/s] 79%|███████▉  | 13738/17405 [00:00<00:00, 34317.95it/s] 99%|█████████▊| 17178/17405 [00:00<00:00, 34343.69it/s]100%|██████████| 17405/17405 [00:00<00:00, 34302.13it/s]
+Traceback (most recent call last):
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_t5.py", line 183, in <module>
+    rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, hf_user)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_t5.py", line 133, in rerank
+    trec_run = load_trec_run(bm25_runs + '/' + template_run_file.format(dataset_name))
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_t5.py", line 15, in load_trec_run
+    for line in open(fname):
+FileNotFoundError: [Errno 2] No such file or directory: 'beir_qld_runs_top100/run.beir.qld-multifield.cqadupstack-webmasters.txt'
+Loading the tokenizer from the `special_tokens_map.json` and the `added_tokens.json` will be removed in `transformers 5`,  it is kept for forward compatibility, but it is recommended to update your `tokenizer_config.json` by uploading it again. You will see the new `added_tokens_decoder` attribute that will store the relevant information.
+You are using the default legacy behaviour of the <class 'transformers.models.t5.tokenization_t5.T5Tokenizer'>. If you see this, DO NOT PANIC! This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thouroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+- - - - - - - - - -  Quantization and Flash Attention  2.0 not used! - - - - - - - - - - 
+- - - - - - - - - - Using T5 model- - - - - - - - - - 
+cqadupstack-wordpress
+reranking_qld/beir_qld_runs_top100_cqadupstack-wordpress_bigscience_T0_3B
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 541
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 48605
+    })
+}) queries
+  0%|          | 0/541 [00:00<?, ?it/s]100%|██████████| 541/541 [00:00<00:00, 35467.17it/s]
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 541
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 48605
+    })
+}) corpus
+  0%|          | 0/48605 [00:00<?, ?it/s]  7%|▋         | 3228/48605 [00:00<00:01, 32278.41it/s] 13%|█▎        | 6472/48605 [00:00<00:01, 32367.63it/s] 20%|█▉        | 9712/48605 [00:00<00:01, 32381.65it/s] 27%|██▋       | 12962/48605 [00:00<00:01, 32425.33it/s] 33%|███▎      | 16226/48605 [00:00<00:00, 32502.10it/s] 40%|████      | 19477/48605 [00:00<00:00, 32483.26it/s] 47%|████▋     | 22726/48605 [00:00<00:00, 32465.19it/s] 53%|█████▎    | 25973/48605 [00:00<00:00, 32449.94it/s] 60%|██████    | 29225/48605 [00:00<00:00, 32470.65it/s] 67%|██████▋   | 32473/48605 [00:01<00:00, 32410.89it/s] 73%|███████▎  | 35717/48605 [00:01<00:00, 32417.81it/s] 80%|████████  | 38959/48605 [00:01<00:00, 32378.10it/s] 87%|████████▋ | 42197/48605 [00:01<00:00, 32363.68it/s] 93%|█████████▎| 45434/48605 [00:01<00:00, 32258.41it/s]100%|██████████| 48605/48605 [00:01<00:00, 32389.68it/s]
+Traceback (most recent call last):
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_t5.py", line 183, in <module>
+    rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, hf_user)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_t5.py", line 133, in rerank
+    trec_run = load_trec_run(bm25_runs + '/' + template_run_file.format(dataset_name))
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank_t5.py", line 15, in load_trec_run
+    for line in open(fname):
+FileNotFoundError: [Errno 2] No such file or directory: 'beir_qld_runs_top100/run.beir.qld-multifield.cqadupstack-wordpress.txt'
+
+JOB STATISTICS
+==============
+Job ID: 4076699
+Cluster: snellius
+User/Group: drau/drau
+State: FAILED (exit code 1)
+Nodes: 1
+Cores per node: 18
+CPU Utilized: 00:02:00
+CPU Efficiency: 5.42% of 00:36:54 core-walltime
+Job Wall-clock time: 00:02:03
+Memory Utilized: 8.45 GB
+Memory Efficiency: 7.04% of 120.00 GB

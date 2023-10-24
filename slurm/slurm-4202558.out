@@ -1,0 +1,102 @@
+
+Tue Oct 17 19:10:24 2023       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.104.12             Driver Version: 535.104.12   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  | 00000000:32:00.0 Off |                  Off |
+| N/A   29C    P0              48W / 400W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+|   1  NVIDIA A100-SXM4-40GB          On  | 00000000:E3:00.0 Off |                  Off |
+| N/A   29C    P0              50W / 400W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+Loading checkpoint shards:   0%|          | 0/15 [00:00<?, ?it/s]Loading checkpoint shards:   7%|▋         | 1/15 [00:12<02:58, 12.75s/it]Loading checkpoint shards:  13%|█▎        | 2/15 [00:25<02:43, 12.57s/it]Loading checkpoint shards:  20%|██        | 3/15 [00:38<02:33, 12.82s/it]Loading checkpoint shards:  27%|██▋       | 4/15 [00:51<02:24, 13.14s/it]Loading checkpoint shards:  33%|███▎      | 5/15 [01:05<02:11, 13.12s/it]Loading checkpoint shards:  40%|████      | 6/15 [01:18<01:57, 13.08s/it]Loading checkpoint shards:  47%|████▋     | 7/15 [01:31<01:44, 13.10s/it]Loading checkpoint shards:  53%|█████▎    | 8/15 [01:44<01:32, 13.29s/it]Loading checkpoint shards:  60%|██████    | 9/15 [01:57<01:19, 13.21s/it]Loading checkpoint shards:  67%|██████▋   | 10/15 [02:11<01:05, 13.18s/it]Loading checkpoint shards:  73%|███████▎  | 11/15 [02:24<00:52, 13.19s/it]Loading checkpoint shards:  80%|████████  | 12/15 [02:37<00:40, 13.34s/it]Loading checkpoint shards:  87%|████████▋ | 13/15 [02:50<00:26, 13.26s/it]Loading checkpoint shards:  93%|█████████▎| 14/15 [03:03<00:13, 13.04s/it]Loading checkpoint shards: 100%|██████████| 15/15 [03:04<00:00,  9.36s/it]Loading checkpoint shards: 100%|██████████| 15/15 [03:04<00:00, 12.29s/it]
+Loading the tokenizer from the `special_tokens_map.json` and the `added_tokens.json` will be removed in `transformers 5`,  it is kept for forward compatibility, but it is recommended to update your `tokenizer_config.json` by uploading it again. You will see the new `added_tokens_decoder` attribute that will store the relevant information.
+You are resizing the embedding layer without providing a `pad_to_multiple_of` parameter. This means that the new embedding dimension will be 32001. This might induce some performance reduction as *Tensor Cores* will not be available. For more details about this, or help on choosing the correct value for resizing, refer to this guide: https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/index.html#requirements-tc
+trec_dl19
+reranking_llama/beir_bm25_runs_top100_trec_dl19_meta-llama_Llama-2-70b-hf
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 43
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 5482
+    })
+}) queries
+  0%|          | 0/43 [00:00<?, ?it/s]100%|██████████| 43/43 [00:00<00:00, 31763.84it/s]
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 43
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 5482
+    })
+}) corpus
+  0%|          | 0/5482 [00:00<?, ?it/s] 66%|██████▌   | 3598/5482 [00:00<00:00, 35978.06it/s]100%|██████████| 5482/5482 [00:00<00:00, 35824.85it/s]
+  0%|          | 0/135 [00:00<?, ?it/s]  0%|          | 0/135 [00:00<?, ?it/s]
+Traceback (most recent call last):
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank.py", line 218, in <module>
+    rerank(dataset_name, model, tokenizer, bm25_runs, batch_size, ranking_file, hf_user)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank.py", line 183, in rerank
+    scores = get_scores(model, instr_tokenized, target_tokenized)
+  File "/gpfs/home3/drau/reproducibility_query_generation/rerank.py", line 149, in get_scores
+    logits = model(**instr_tokenized.to('cuda')).logits
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 1035, in forward
+    input_ids=input_ids,
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 922, in forward
+    hidden_states,
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 632, in forward
+    # Self Attention
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/accelerate/hooks.py", line 165, in new_forward
+    output = old_forward(*args, **kwargs)
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 340, in forward
+    key_states = [F.linear(hidden_states, key_slices[i]) for i in range(self.config.pretraining_tp)]
+  File "/gpfs/home3/drau/llm_rankers/venv/lib/python3.9/site-packages/transformers/models/llama/modeling_llama.py", line 340, in <listcomp>
+    key_states = [F.linear(hidden_states, key_slices[i]) for i in range(self.config.pretraining_tp)]
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (5856x8192 and 1x4096)
+Loading checkpoint shards:   0%|          | 0/15 [00:00<?, ?it/s]Loading checkpoint shards:   7%|▋         | 1/15 [00:05<01:13,  5.23s/it]Loading checkpoint shards:  13%|█▎        | 2/15 [00:10<01:05,  5.08s/it]Loading checkpoint shards:  20%|██        | 3/15 [00:15<01:00,  5.07s/it]Loading checkpoint shards:  27%|██▋       | 4/15 [00:20<00:56,  5.10s/it]Loading checkpoint shards:  33%|███▎      | 5/15 [00:25<00:50,  5.05s/it]Loading checkpoint shards:  40%|████      | 6/15 [00:30<00:45,  5.02s/it]Loading checkpoint shards:  47%|████▋     | 7/15 [00:35<00:39,  4.97s/it]Loading checkpoint shards:  53%|█████▎    | 8/15 [00:40<00:34,  4.99s/it]Loading checkpoint shards:  60%|██████    | 9/15 [00:45<00:29,  4.93s/it]Loading checkpoint shards:  67%|██████▋   | 10/15 [00:49<00:24,  4.88s/it]slurmstepd: error: *** JOB 4202558 ON gcn31 CANCELLED AT 2023-10-17T19:14:50 ***
+slurmstepd: error: container_p_join: setns failed for /slurm/4202558/.ns: Invalid argument
+slurmstepd: error: container_g_join(4202558): Invalid argument
+
+JOB STATISTICS
+==============
+Job ID: 4202558
+Cluster: snellius
+User/Group: drau/drau
+State: CANCELLED (exit code 0)
+Nodes: 1
+Cores per node: 36
+CPU Utilized: 00:03:31
+CPU Efficiency: 2.11% of 02:46:48 core-walltime
+Job Wall-clock time: 00:04:38
+Memory Utilized: 9.10 GB
+Memory Efficiency: 3.79% of 240.00 GB

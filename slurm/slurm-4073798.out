@@ -1,0 +1,65 @@
+
+Tue Oct 10 10:20:01 2023       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.104.12             Driver Version: 535.104.12   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  | 00000000:31:00.0 Off |                  Off |
+| N/A   29C    P0              52W / 400W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+Loading the tokenizer from the `special_tokens_map.json` and the `added_tokens.json` will be removed in `transformers 5`,  it is kept for forward compatibility, but it is recommended to update your `tokenizer_config.json` by uploading it again. You will see the new `added_tokens_decoder` attribute that will store the relevant information.
+You are using the default legacy behaviour of the <class 'transformers.models.t5.tokenization_t5.T5Tokenizer'>. If you see this, DO NOT PANIC! This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thouroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+- - - - - - - - - -  Quantization and Flash Attention  2.0 not used! - - - - - - - - - - 
+- - - - - - - - - - Using T5 model- - - - - - - - - - 
+cqadupstack-android
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 699
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 22998
+    })
+}) queries
+  0%|          | 0/699 [00:00<?, ?it/s]100%|██████████| 699/699 [00:00<00:00, 36243.17it/s]
+DatasetDict({
+    queries: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 699
+    })
+    corpus: Dataset({
+        features: ['_id', 'text', 'title'],
+        num_rows: 22998
+    })
+}) corpus
+  0%|          | 0/22998 [00:00<?, ?it/s] 15%|█▌        | 3489/22998 [00:00<00:00, 34881.63it/s] 30%|███       | 6989/22998 [00:00<00:00, 34945.79it/s] 46%|████▌     | 10497/22998 [00:00<00:00, 35002.35it/s] 61%|██████    | 13998/22998 [00:00<00:00, 34979.67it/s] 76%|███████▌  | 17501/22998 [00:00<00:00, 34993.40it/s] 91%|█████████▏| 21001/22998 [00:00<00:00, 34947.24it/s]100%|██████████| 22998/22998 [00:00<00:00, 34922.82it/s]
+  0%|          | 0/365 [00:00<?, ?it/s]  0%|          | 1/365 [00:04<29:28,  4.86s/it]  1%|          | 2/365 [00:07<23:07,  3.82s/it]  1%|          | 3/365 [00:11<21:21,  3.54s/it]  1%|          | 4/365 [00:14<20:25,  3.39s/it]  1%|▏         | 5/365 [00:17<19:45,  3.29s/it]  2%|▏         | 6/365 [00:20<19:18,  3.23s/it]  2%|▏         | 7/365 [00:23<19:07,  3.21s/it]  2%|▏         | 8/365 [00:26<18:55,  3.18s/it]  2%|▏         | 9/365 [00:30<18:53,  3.18s/it]  3%|▎         | 10/365 [00:33<18:48,  3.18s/it]  3%|▎         | 11/365 [00:36<18:42,  3.17s/it]  3%|▎         | 12/365 [00:39<18:37,  3.17s/it]  4%|▎         | 13/365 [00:42<18:40,  3.18s/it]  4%|▍         | 14/365 [00:45<18:37,  3.19s/it]  4%|▍         | 15/365 [00:49<18:39,  3.20s/it]  4%|▍         | 16/365 [00:52<18:30,  3.18s/it]  5%|▍         | 17/365 [00:55<18:23,  3.17s/it]  5%|▍         | 18/365 [00:58<18:14,  3.15s/it]  5%|▌         | 19/365 [01:01<18:14,  3.16s/it]  5%|▌         | 20/365 [01:04<18:05,  3.15s/it]  6%|▌         | 21/365 [01:08<18:07,  3.16s/it]  6%|▌         | 22/365 [01:11<18:04,  3.16s/it]  6%|▋         | 23/365 [01:14<18:06,  3.18s/it]  7%|▋         | 24/365 [01:17<18:03,  3.18s/it]  7%|▋         | 25/365 [01:20<17:55,  3.16s/it]  7%|▋         | 26/365 [01:23<17:47,  3.15s/it]  7%|▋         | 27/365 [01:27<17:46,  3.16s/it]  8%|▊         | 28/365 [01:30<17:45,  3.16s/it]  8%|▊         | 29/365 [01:33<17:42,  3.16s/it]  8%|▊         | 30/365 [01:36<17:32,  3.14s/it]  8%|▊         | 31/365 [01:39<17:28,  3.14s/it]  9%|▉         | 32/365 [01:42<17:27,  3.14s/it]  9%|▉         | 33/365 [01:45<17:26,  3.15s/it]  9%|▉         | 34/365 [01:48<17:15,  3.13s/it] 10%|▉         | 35/365 [01:52<17:13,  3.13s/it] 10%|▉         | 36/365 [01:55<17:07,  3.12s/it] 10%|█         | 37/365 [01:58<17:05,  3.13s/it] 10%|█         | 38/365 [02:01<16:57,  3.11s/it] 11%|█         | 39/365 [02:04<17:00,  3.13s/it] 11%|█         | 40/365 [02:07<17:03,  3.15s/it] 11%|█         | 41/365 [02:10<17:04,  3.16s/it] 12%|█▏        | 42/365 [02:14<16:58,  3.15s/it] 12%|█▏        | 43/365 [02:17<17:00,  3.17s/it] 12%|█▏        | 44/365 [02:20<16:58,  3.17s/it] 12%|█▏        | 45/365 [02:23<16:51,  3.16s/it] 13%|█▎        | 46/365 [02:26<16:46,  3.15s/it] 13%|█▎        | 47/365 [02:29<16:46,  3.17s/it] 13%|█▎        | 48/365 [02:33<16:40,  3.16s/it] 13%|█▎        | 49/365 [02:36<16:36,  3.15s/it] 14%|█▎        | 50/365 [02:39<16:29,  3.14s/it] 14%|█▍        | 51/365 [02:42<16:28,  3.15s/it] 14%|█▍        | 52/365 [02:45<16:22,  3.14s/it] 15%|█▍        | 53/365 [02:48<16:17,  3.13s/it] 15%|█▍        | 54/365 [02:51<16:10,  3.12s/it] 15%|█▌        | 55/365 [02:55<16:17,  3.15s/it] 15%|█▌        | 56/365 [02:58<16:18,  3.17s/it] 16%|█▌        | 57/365 [03:01<16:17,  3.18s/it] 16%|█▌        | 58/365 [03:04<16:11,  3.16s/it] 16%|█▌        | 59/365 [03:07<16:10,  3.17s/it] 16%|█▋        | 60/365 [03:10<16:07,  3.17s/it] 17%|█▋        | 61/365 [03:14<16:05,  3.18s/it] 17%|█▋        | 62/365 [03:17<15:56,  3.16s/it] 17%|█▋        | 63/365 [03:20<15:55,  3.17s/it] 18%|█▊        | 64/365 [03:23<15:57,  3.18s/it] 18%|█▊        | 65/365 [03:26<15:56,  3.19s/it] 18%|█▊        | 66/365 [03:30<15:52,  3.19s/it] 18%|█▊        | 67/365 [03:33<15:51,  3.19s/it] 19%|█▊        | 68/365 [03:36<15:41,  3.17s/it] 19%|█▉        | 69/365 [03:39<15:34,  3.16s/it] 19%|█▉        | 70/365 [03:42<15:27,  3.14s/it] 19%|█▉        | 71/365 [03:45<15:27,  3.15s/it] 20%|█▉        | 72/365 [03:48<15:23,  3.15s/it] 20%|██        | 73/365 [03:52<15:19,  3.15s/it] 20%|██        | 74/365 [03:55<15:11,  3.13s/it] 21%|██        | 75/365 [03:58<15:09,  3.14s/it] 21%|██        | 76/365 [04:01<15:10,  3.15s/it] 21%|██        | 77/365 [04:04<15:05,  3.15s/it] 21%|██▏       | 78/365 [04:07<15:03,  3.15s/it] 22%|██▏       | 79/365 [04:11<15:04,  3.16s/it]slurmstepd: error: *** JOB 4073798 ON gcn11 CANCELLED AT 2023-10-10T10:24:55 ***
+slurmstepd: error: container_p_join: open failed for /slurm/4073798/.ns: No such file or directory
+slurmstepd: error: container_g_join(4073798): No such file or directory
+
+JOB STATISTICS
+==============
+Job ID: 4073798
+Cluster: snellius
+User/Group: drau/drau
+State: CANCELLED (exit code 0)
+Nodes: 1
+Cores per node: 18
+CPU Utilized: 00:00:01
+CPU Efficiency: 0.02% of 01:30:54 core-walltime
+Job Wall-clock time: 00:05:03
+Memory Utilized: 9.75 GB
+Memory Efficiency: 8.12% of 120.00 GB
